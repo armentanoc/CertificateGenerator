@@ -14,7 +14,7 @@ import br.ucsal.certificateGenerator.domain.Participante;
 
 public class ParticipanteService {
 	
-	public List<Participante> lerPlanilhaDeParticipantes(FileInputStream fis) {
+	public List<Participante> lerPlanilhaDeParticipantes(FileInputStream fis, String nomeEvento, int cargaHorariaEvento) {
 		List<Participante> listaParticipantes = new ArrayList<>();
         try {
             HSSFWorkbook planilha = new HSSFWorkbook(fis);
@@ -42,14 +42,10 @@ public class ParticipanteService {
                             break;
                     }
                 }
-                listaParticipantes.add(new Participante(nome, cpf, email));
+                listaParticipantes.add(new Participante(nome, cpf, email, nomeEvento, cargaHorariaEvento));
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-
-        for (Participante participante : listaParticipantes) {
-            System.out.println("Nome: " + participante.getNome() + ", CPF: " + participante.getCpf() + ", Email: " + participante.getEmail());
         }
         
         return listaParticipantes;
