@@ -31,7 +31,7 @@ public class Main {
 			imprimirParticipantes(listaParticipantes);
 
 			EmailService emailService = new EmailService();
-			emailService.enviarEmails(listaParticipantes);
+			//emailService.enviarEmails(listaParticipantes);
 
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
