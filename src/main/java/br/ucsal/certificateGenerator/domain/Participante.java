@@ -1,3 +1,4 @@
+package br.ucsal.certificateGenerator.domain;
 public class Participante {
 	private String nome;
     private String cpf;

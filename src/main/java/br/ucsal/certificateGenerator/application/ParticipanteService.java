@@ -1,3 +1,5 @@
+package br.ucsal.certificateGenerator.application;
+
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,12 +10,13 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
-public class Main {
+import br.ucsal.certificateGenerator.domain.Participante;
 
-    public static void main(String[] args) {
-        List<Participante> listaParticipantes = new ArrayList<>();
+public class ParticipanteService {
+	
+	public List<Participante> lerPlanilhaDeParticipantes(FileInputStream fis) {
+		List<Participante> listaParticipantes = new ArrayList<>();
         try {
-            FileInputStream fis = new FileInputStream("participantes.xls");
             HSSFWorkbook planilha = new HSSFWorkbook(fis);
             HSSFSheet participantes = planilha.getSheetAt(0);
             Iterator<Row> itLinha = participantes.iterator();
@@ -48,5 +51,8 @@ public class Main {
         for (Participante participante : listaParticipantes) {
             System.out.println("Nome: " + participante.getNome() + ", CPF: " + participante.getCpf() + ", Email: " + participante.getEmail());
         }
-    }
+        
+        return listaParticipantes;
+	}
+
 }
