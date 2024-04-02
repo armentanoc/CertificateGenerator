@@ -5,6 +5,7 @@ import java.util.List;
 
 import br.ucsal.certificateGenerator.domain.EmailManager;
 import br.ucsal.certificateGenerator.domain.Participante;
+import controllers.listInfo;
 
 public class EmailService {
 
@@ -17,7 +18,7 @@ public class EmailService {
 
 	public void enviarEmails(List<Participante> participantes) throws IOException {
 		for (Participante participante : participantes) {
-			EmailManager emailManager = new EmailManager(host, username, password, participante);
+			EmailManager emailManager = new EmailManager(host, listInfo.email, listInfo.password, participante);
 			emailManager.enviarEmail();
 		}
 	}
