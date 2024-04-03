@@ -2,6 +2,9 @@ package br.ucsal.certificateGenerator.application;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import br.ucsal.certificateGenerator.domain.EmailManager;
 import br.ucsal.certificateGenerator.domain.Participante;
@@ -12,16 +15,27 @@ public class EmailService {
 	String username = "testarmentanoc@gmail.com";
 	String password = "zlsu viqz bzfv vthr";
 	String result = "";
-	//String username = System.getenv("GMAIL_USERNAME");
-	//String password = System.getenv("GMAIL_PASSWORD");
-	// app password específico para CertificateGenerator
 
-	public String enviarEmails(List<Participante> participantes) throws IOException {
-		
-		for (Participante participante : participantes) {
-			EmailManager emailManager = new EmailManager(host, username, password, participante);
-			result += emailManager.enviarEmail() + "\n";
-		}
-		return result;
-	}
+	public String enviarEmails(List<Participante> participantes) throws InterruptedException {
+        StringBuilder result = new StringBuilder();
+        int numThreads = Runtime.getRuntime().availableProcessors(); // Number of available CPU cores
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+        for (Participante participante : participantes) {
+            Runnable emailTask = () -> {
+                EmailManager emailManager = new EmailManager(host, username, password, participante);
+                try {
+					result.append(emailManager.enviarEmail()).append("\n");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+            };
+            executor.submit(emailTask);
+        }
+
+        executor.shutdown();
+        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+
+        return result.toString();
+    }
 }
