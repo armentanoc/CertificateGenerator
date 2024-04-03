@@ -30,6 +30,45 @@ public class CertificateGeneratorService {
         this.listaParticipantes = listaParticipantes;
     }
 
+	public List<Participante> gerarCertificados() throws InterruptedException {
+        int numThreads = Runtime.getRuntime().availableProcessors(); // Number of available CPU cores
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
+        for (Participante participante : listaParticipantes) {
+            Runnable certificateTask = () -> criarDocumentoVazio(participante);
+            executor.submit(certificateTask);
+        }
+
+        executor.shutdown();
+        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+
+        return listaParticipantes;
+    }
+
+    private Participante criarDocumentoVazio(Participante participante) {
+        String certificatePath = "src/main/java/br/ucsal/certificateGenerator/infra/";
+        String fileName = certificatePath + participante.getNome() + "_" + participante.getNomeEvento() + ".pdf";
+        File file = new File(fileName);
+        if (!file.exists()) {
+            try {
+                PDDocument document = new PDDocument();
+                PDPage page = new PDPage();
+                document.addPage(page);
+                customizeCertificate(document, page, participante);
+                document.save(fileName);
+                document.close();
+                participante.setCertificate(file);
+                System.out.println("[CERTIFICATE GENERATOR] Certificado criado para: " + participante.getNome());
+            } catch (IOException e) {
+                System.err.println("[CERTIFICATE GENERATOR] Erro criando certificado: " + e.getMessage());
+            }
+        } else {
+            System.out.println("[CERTIFICATE GENERATOR] Certificado já existe para: " + participante.getNome());
+            participante.setCertificate(file);
+        }
+        return participante;
+    }
+
     private void customizeCertificate(PDDocument document, PDPage page, Participante participante) throws IOException {
     	
     	float POINTS_PER_INCH = 72;
@@ -114,45 +153,5 @@ public class CertificateGeneratorService {
 
         contentStream.endText();
         contentStream.close();
-    }
-
-
-	public List<Participante> gerarCertificados() throws InterruptedException {
-        int numThreads = Runtime.getRuntime().availableProcessors(); // Number of available CPU cores
-        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
-
-        for (Participante participante : listaParticipantes) {
-            Runnable certificateTask = () -> criarDocumentoVazio(participante);
-            executor.submit(certificateTask);
-        }
-
-        executor.shutdown();
-        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
-
-        return listaParticipantes;
-    }
-
-    private Participante criarDocumentoVazio(Participante participante) {
-        String certificatePath = "src/main/java/br/ucsal/certificateGenerator/infra/";
-        String fileName = certificatePath + participante.getNome() + "_" + participante.getNomeEvento() + ".pdf";
-        File file = new File(fileName);
-        if (!file.exists()) {
-            try {
-                PDDocument document = new PDDocument();
-                PDPage page = new PDPage();
-                document.addPage(page);
-                customizeCertificate(document, page, participante);
-                document.save(fileName);
-                document.close();
-                participante.setCertificate(file);
-                System.out.println("[CERTIFICATE GENERATOR SERVICE] Certificado vazio criado para: " + participante.getNome());
-            } catch (IOException e) {
-                System.err.println("Erro criando certificado: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Certificado já existe para: " + participante.getNome());
-            participante.setCertificate(file);
-        }
-        return participante;
     }
 }
