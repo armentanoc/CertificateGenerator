@@ -47,7 +47,7 @@ public class CertificateGeneratorService {
                 document.save(fileName);
                 document.close();
                 participante.setCertificate(file);
-                System.out.println("Certificado vazio criado para: " + participante.getNome());
+                System.out.println("[CERTIFICATE GENERATOR SERVICE] Certificado vazio criado para: " + participante.getNome());
             } catch (IOException e) {
                 System.err.println("Erro criando certificado: " + e.getMessage());
             }

@@ -18,7 +18,7 @@ public class EmailService {
 
 	public String enviarEmails(List<Participante> participantes) throws InterruptedException {
         StringBuilder result = new StringBuilder();
-        int numThreads = Runtime.getRuntime().availableProcessors(); // Number of available CPU cores
+        int numThreads = Runtime.getRuntime().availableProcessors(); 
         ExecutorService executor = Executors.newFixedThreadPool(numThreads);
 
         for (Participante participante : participantes) {

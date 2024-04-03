@@ -59,7 +59,7 @@ public class ParticipanteService {
                     break;
             }
         }
-        System.out.println("Informacoes lidas com sucesso da planilha para o participante: " + nome);
+        System.out.println("[PARTICIPANTE SERVICE] Informacoes lidas com sucesso da planilha para o participante: " + nome);
         synchronized (listaParticipantes) {
             listaParticipantes.add(new Participante(nome, cpf, email, nomeEvento, cargaHorariaEvento));
         }

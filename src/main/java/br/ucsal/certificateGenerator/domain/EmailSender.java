@@ -59,11 +59,11 @@ public class EmailSender {
             
             Transport.send(message);
             returnMessage = "E-mail enviado com sucesso para: " + to;
-            System.out.println("\u001B[32m" + returnMessage + "\u001B[0m");
+            System.out.println("\u001B[32m" + "[EMAIL SENDER] " + returnMessage + "\u001B[0m");
             return returnMessage;
 
         } catch (MessagingException e) {
-        	returnMessage = "Erro ao enviar e-mail para: " + to;
+        	returnMessage = "[EMAIL SENDER] Erro ao enviar e-mail para: " + to;
         	System.err.print(returnMessage);
         	e.printStackTrace();
         	return returnMessage;
