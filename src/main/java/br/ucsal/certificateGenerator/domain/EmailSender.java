@@ -14,6 +14,7 @@ public class EmailSender {
     private String host;
     private String username;
     private String password;
+    private String returnMessage;
 
     public EmailSender(String host, String username, String password) {
         this.host = host;
@@ -21,7 +22,7 @@ public class EmailSender {
         this.password = password;
     }
 
-    public void sendEmail(String to, EmailContent emailContent) throws IOException {
+    public String sendEmail(String to, EmailContent emailContent) throws IOException {
 
     	Properties properties = new Properties();
     	properties.put("mail.smtp.host", host);
@@ -57,11 +58,15 @@ public class EmailSender {
             }
             
             Transport.send(message);
-            System.out.println("\u001B[32mE-mail enviado com sucesso para: " + to + "\u001B[0m");
+            returnMessage = "E-mail enviado com sucesso para: " + to;
+            System.out.println("\u001B[32m" + returnMessage + "\u001B[0m");
+            return returnMessage;
 
         } catch (MessagingException e) {
-            System.err.println("Erro ao enviar e-mail para: " + to);
-            e.printStackTrace();
+        	returnMessage = "Erro ao enviar e-mail para: " + to;
+        	System.err.print(returnMessage);
+        	e.printStackTrace();
+        	return returnMessage;
         }
     }
 }

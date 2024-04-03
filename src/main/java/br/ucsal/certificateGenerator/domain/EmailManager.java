@@ -22,12 +22,11 @@ public class EmailManager {
 		this.emailContent = new EmailContent(this.participante);
 	}
 
-	public void enviarEmail() throws IOException {
+	public String enviarEmail() throws IOException {
 		String email = participante.getEmail();
 		if (EmailValidator.getInstance().isValid(email))
-			this.emailSender.sendEmail(email, this.emailContent);
+			return this.emailSender.sendEmail(email, this.emailContent);
 		else
-			System.out.println("Email não enviado para o participante " + participante.getNome() + " porque o email "
-					+ participante.getEmail() + " é inválido.");
+			return "Erro ao enviar e-mail para: " + participante.getEmail() + " (email invalido)";
 	}
 }
