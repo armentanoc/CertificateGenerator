@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
@@ -137,11 +140,19 @@ public class CertificateGeneratorService {
         contentStream.close();
     }
 
-    public List<Participante> gerarCertificados() {
+
+	public List<Participante> gerarCertificados() throws InterruptedException {
+        int numThreads = Runtime.getRuntime().availableProcessors(); // Number of available CPU cores
+        ExecutorService executor = Executors.newFixedThreadPool(numThreads);
+
         for (Participante participante : listaParticipantes) {
-            participante = criarDocumentoVazio(participante);
-            System.out.println(participante.toString() + "\n");
+            Runnable certificateTask = () -> criarDocumentoVazio(participante);
+            executor.submit(certificateTask);
         }
+
+        executor.shutdown();
+        executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+
         return listaParticipantes;
     }
 }
