@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import br.ucsal.certificateGenerator.application.CertificateGeneratorService;
 import br.ucsal.certificateGenerator.application.EmailService;
 import br.ucsal.certificateGenerator.application.ParticipanteService;
 import br.ucsal.certificateGenerator.domain.Participante;
@@ -43,10 +44,15 @@ public class Main extends Application {
 					throw new IllegalArgumentException("Por favor, preencha todos os campos corretamente e selecione uma planilha.");
 
 				int cargaHorariaEvento = Integer.parseInt(cargaHoraria);
+				
 				ParticipanteService participanteService = new ParticipanteService();
+				
 				List<Participante> listaParticipantes = participanteService.lerPlanilhaDeParticipantes(selectedFile,
 						nomeEvento, cargaHorariaEvento);
-				System.out.println(imprimirParticipantes(listaParticipantes)); //debug
+				
+				CertificateGeneratorService certificateGeneratorService = new CertificateGeneratorService(listaParticipantes);
+				listaParticipantes = certificateGeneratorService.gerarCertificados();
+				
 				EmailService emailService = new EmailService();
 				String result = emailService.enviarEmails(listaParticipantes);
 				String message = "\nRelatório de Envio: \nNome do Evento: " + nomeEvento + ", Carga Horária: " + cargaHoraria + "\n"
@@ -74,37 +80,5 @@ public class Main extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
-	}
-
-	private static String imprimirParticipantes(List<Participante> listaParticipantes) {
-		String result = "";
-		for (Participante participante : listaParticipantes) {
-			result += participante.toString() + "\n";
-			participante = criarDocumentoVazio(participante);
-		}
-		return result;
-	}
-
-	private static Participante criarDocumentoVazio(Participante participante) {
-		String certificatePath = "src/main/java/br/ucsal/certificateGenerator/infra/";
-		String fileName = certificatePath + participante.getNome() + "_" + participante.getNomeEvento() + ".pdf";
-		File file = new File(fileName);
-		if (!file.exists()) {
-			try {
-				PDDocument document = new PDDocument();
-				PDPage page = new PDPage();
-				document.addPage(page);
-				document.save(fileName);
-				document.close();
-				participante.setCertificate(file);
-				System.out.println("Certificado vazio criado para: " + participante.getNome());
-			} catch (IOException e) {
-				System.err.println("Erro criando certificado: " + e.getMessage());
-			}
-		} else {
-			System.out.println("Certificado já existe para: " + participante.getNome());
-			participante.setCertificate(file);
-		}
-		return participante;
 	}
 }

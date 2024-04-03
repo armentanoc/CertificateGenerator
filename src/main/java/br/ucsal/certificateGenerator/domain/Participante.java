@@ -8,7 +8,7 @@ public class Participante {
 	private String cpf;
 	private String email;
 	private String nomeEvento;
-	private File certificate;
+	private File certificado;
 	private int cargaHorariaEvento;
 
 	public Participante(String nome, String cpf, String email, String nomeEvento, int cargaHorariaEvento) {
@@ -40,16 +40,16 @@ public class Participante {
 	}
 	
 	public void setCertificate(File certificate) {
-		this.certificate = certificate;
+		this.certificado = certificate;
 	}
 	
 	public File getCertificate() {
-		return this.certificate;
+		return this.certificado;
 	}
 
 	@Override
 	public String toString() {
 		return "Participante [nome=" + nome + ", cpf=" + cpf + ", email=" + email + ", nomeEvento=" + nomeEvento
-				+ ", cargaHorariaEvento=" + cargaHorariaEvento + "]";
+				+ ", cargaHorariaEvento=" + cargaHorariaEvento + ", certificado=" + certificado.getPath() + "]";
 	}
 }
