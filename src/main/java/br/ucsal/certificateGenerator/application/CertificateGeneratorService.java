@@ -30,30 +30,6 @@ public class CertificateGeneratorService {
         this.listaParticipantes = listaParticipantes;
     }
 
-    private Participante criarDocumentoVazio(Participante participante) {
-        String certificatePath = "src/main/java/br/ucsal/certificateGenerator/infra/";
-        String fileName = certificatePath + participante.getNome() + "_" + participante.getNomeEvento() + ".pdf";
-        File file = new File(fileName);
-        if (!file.exists()) {
-            try {
-                PDDocument document = new PDDocument();
-                PDPage page = new PDPage();
-                document.addPage(page);
-                customizeCertificate(document, page, participante);
-                document.save(fileName);
-                document.close();
-                participante.setCertificate(file);
-                System.out.println("[CERTIFICATE GENERATOR SERVICE] Certificado criado para: " + participante.getNome());
-            } catch (IOException e) {
-                System.err.println("[CERTIFICATE GENERATOR SERVICE] Erro criando certificado: " + e.getMessage());
-            }
-        } else {
-            System.out.println("[CERTIFICATE GENERATOR SERVICE] Certificado já existe para: " + participante.getNome());
-            participante.setCertificate(file);
-        }
-        return participante;
-    }
-
     private void customizeCertificate(PDDocument document, PDPage page, Participante participante) throws IOException {
     	
     	float POINTS_PER_INCH = 72;
@@ -156,4 +132,27 @@ public class CertificateGeneratorService {
         return listaParticipantes;
     }
 
+    private Participante criarDocumentoVazio(Participante participante) {
+        String certificatePath = "src/main/java/br/ucsal/certificateGenerator/infra/";
+        String fileName = certificatePath + participante.getNome() + "_" + participante.getNomeEvento() + ".pdf";
+        File file = new File(fileName);
+        if (!file.exists()) {
+            try {
+                PDDocument document = new PDDocument();
+                PDPage page = new PDPage();
+                document.addPage(page);
+                customizeCertificate(document, page, participante);
+                document.save(fileName);
+                document.close();
+                participante.setCertificate(file);
+                System.out.println("[CERTIFICATE GENERATOR SERVICE] Certificado vazio criado para: " + participante.getNome());
+            } catch (IOException e) {
+                System.err.println("Erro criando certificado: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Certificado já existe para: " + participante.getNome());
+            participante.setCertificate(file);
+        }
+        return participante;
+    }
 }
