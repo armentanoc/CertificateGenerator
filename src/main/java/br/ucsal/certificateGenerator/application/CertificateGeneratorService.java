@@ -43,12 +43,12 @@ public class CertificateGeneratorService {
                 document.save(fileName);
                 document.close();
                 participante.setCertificate(file);
-                System.out.println("Certificado criado para: " + participante.getNome());
+                System.out.println("[CERTIFICATE GENERATOR SERVICE] Certificado criado para: " + participante.getNome());
             } catch (IOException e) {
-                System.err.println("Erro criando certificado: " + e.getMessage());
+                System.err.println("[CERTIFICATE GENERATOR SERVICE] Erro criando certificado: " + e.getMessage());
             }
         } else {
-            System.out.println("Certificado já existe para: " + participante.getNome());
+            System.out.println("[CERTIFICATE GENERATOR SERVICE] Certificado já existe para: " + participante.getNome());
             participante.setCertificate(file);
         }
         return participante;
@@ -155,4 +155,5 @@ public class CertificateGeneratorService {
 
         return listaParticipantes;
     }
+
 }

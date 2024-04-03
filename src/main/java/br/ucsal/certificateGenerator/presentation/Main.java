@@ -55,13 +55,13 @@ public class Main extends Application {
 				
 				EmailService emailService = new EmailService();
 				String result = emailService.enviarEmails(listaParticipantes);
-				String message = "\nRelatório de Envio: \nNome do Evento: " + nomeEvento + ", Carga Horária: " + cargaHoraria + "\n"
+				String message = "\nRELATÓRIO DE ENVIO DE CERTIFICADOS \nNome do Evento: " + nomeEvento + ", Carga Horária: " + cargaHoraria + "\n"
 						+ result;
 				outputTextArea.appendText(message);
 			} catch (Exception ex) {
-				String message = "\nErro: " + ex.getMessage();
+				String message = "[ERRO] " + ex.getMessage();
 				System.err.println(message);
-				outputTextArea.appendText(message);
+				outputTextArea.appendText("\n" + message);
 			}
 		});
 
