@@ -39,6 +39,10 @@ public class Main extends Application {
         progressBar.setPrefWidth(PROGRESS_BAR_WIDTH);
 
         submitButton.setOnAction(e -> {
+        	
+        	String message = "\nProcessamento iniciado... Aguarde";
+            outputTextArea.appendText(message);
+            
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if (selectedFile == null) {
                 return;
