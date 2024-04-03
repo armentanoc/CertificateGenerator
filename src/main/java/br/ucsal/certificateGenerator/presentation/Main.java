@@ -1,11 +1,14 @@
+package br.ucsal.certificateGenerator.presentation;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-
-import javax.swing.text.Document;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -14,9 +17,11 @@ import br.ucsal.certificateGenerator.application.EmailService;
 import br.ucsal.certificateGenerator.application.ParticipanteService;
 import br.ucsal.certificateGenerator.domain.Participante;
 
-public class Main {
+public class Main extends Application {
 
-	public static void main(String[] args) {
+	@Override
+	public void start(Stage primaryStage) {
+		
 		try {
 			String nomeEvento = "Seminário de Engenharia de Software";
 			int cargaHorariaEvento = 10;
@@ -28,21 +33,39 @@ public class Main {
 			List<Participante> listaParticipantes = participanteService.lerPlanilhaDeParticipantes(fis, nomeEvento,
 					cargaHorariaEvento);
 			
-			imprimirParticipantes(listaParticipantes);
+			// Set the title of the stage
+			primaryStage.setTitle("Certificate Generator");
+			
+			// Create a label
+			Label label = new Label(imprimirParticipantes(listaParticipantes));
+
+			// Create a layout pane
+			StackPane root = new StackPane();
+			root.getChildren().add(label);
+
+			// Create a scene
+			Scene scene = new Scene(root, 800, 800);
+
+			// Set the scene on the primary stage
+			primaryStage.setScene(scene);
+			// Show the stage
+			primaryStage.show();
 
 			EmailService emailService = new EmailService();
-			//emailService.enviarEmails(listaParticipantes);
+			emailService.enviarEmails(listaParticipantes);
 
 		} catch (Exception e) {
 			System.out.println("Erro: " + e.getMessage());
 		}
 	}
 
-	private static void imprimirParticipantes(List<Participante> listaParticipantes) {
+	private static String imprimirParticipantes(List<Participante> listaParticipantes) {
+		String result = "";
 		for (Participante participante : listaParticipantes) {
-			System.out.println(participante.toString());
+			result += participante.toString()+"\n";
 			participante = criarDocumentoVazio(participante);
 		}
+		return result;
 	}
 
 	private static Participante criarDocumentoVazio(Participante participante) {
