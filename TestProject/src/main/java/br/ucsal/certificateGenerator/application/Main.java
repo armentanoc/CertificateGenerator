@@ -1,0 +1,35 @@
+package br.ucsal.certificateGenerator.application;
+
+import br.ucsal.certificateGenerator.controllers.MouseDrag;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+    @Override
+    public void start(Stage stage) {
+    	MouseDrag mousedrag = new MouseDrag();
+        try {
+        	Parent root = FXMLLoader.load(getClass().getResource("design/Login.fxml"));
+			Scene scene = new Scene(root);
+            mousedrag.enableDrag(root, stage);
+
+            stage.setResizable(false);
+            stage.getIcons().add(new Image("maca1.png"));
+            stage.setTitle("Email Sender");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {e.printStackTrace();}
+    }
+	
+	
+}
