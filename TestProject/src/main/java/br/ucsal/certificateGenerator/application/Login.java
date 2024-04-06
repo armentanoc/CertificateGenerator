@@ -33,7 +33,7 @@ public class Login implements Initializable {
     	Stage stage = new Stage();
 		try {
 			mainPage.getScene().getWindow().hide();
-        	Parent root = FXMLLoader.load(getClass().getResource("design/SendMail.fxml"));
+        	Parent root = FXMLLoader.load(getClass().getResource("/fxml/SendMail.fxml"));
 			Scene scene = new Scene(root);
 			
             mousedrag.enableDrag(root, stage);

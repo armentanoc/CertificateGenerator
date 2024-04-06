@@ -15,7 +15,7 @@
 }
 .textfield{
     -fx-background-color: #5E5E5E;
-    -fx-padding: 0 0 0 28px;
+    -fx-padding: 0 0 0 10px;
     -fx-border-color: linear-gradient(to left, #F63BFF, #3E56EB);
     -fx-font-family: 'Georgia'; 
     -fx-border-width: 2px;

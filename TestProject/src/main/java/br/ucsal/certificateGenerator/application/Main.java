@@ -18,7 +18,7 @@ public class Main extends Application {
     public void start(Stage stage) {
     	MouseDrag mousedrag = new MouseDrag();
         try {
-        	Parent root = FXMLLoader.load(getClass().getResource("design/Login.fxml"));
+        	Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
 			Scene scene = new Scene(root);
             mousedrag.enableDrag(root, stage);
 

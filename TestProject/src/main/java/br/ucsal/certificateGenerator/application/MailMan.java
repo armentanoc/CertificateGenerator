@@ -29,7 +29,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MailMan implements Initializable {
-    private final int PROGRESS_BAR_WIDTH = 300;
+    private final int PROGRESS_BAR_WIDTH = 640;
     private final FileChooser fileChooser = new FileChooser();
     private final AlertMessage alert = new AlertMessage();
     private final MouseDrag mouseDrag = new MouseDrag();
@@ -59,7 +59,7 @@ public class MailMan implements Initializable {
     private void selectPage() {
         try {
             mainPage.getScene().getWindow().hide();
-            Parent root = FXMLLoader.load(getClass().getResource("design/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/Login.fxml"));
             Scene scene = new Scene(root);
 
             mouseDrag.enableDrag(root, stage);
