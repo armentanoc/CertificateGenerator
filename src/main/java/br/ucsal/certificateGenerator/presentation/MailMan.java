@@ -34,11 +34,12 @@ public class MailMan implements Initializable {
     private final AlertMessage alert = new AlertMessage();
     private final MouseDrag mouseDrag = new MouseDrag();
     private final Stage stage = new Stage();
+    private File planilhaParticipantes;
 
     @FXML
     private Button MailAddFiles;
     @FXML
-    private TextArea MailFiles;
+    private TextField MailFiles;
     @FXML
     private Button MailLeave;
     @FXML
@@ -65,7 +66,7 @@ public class MailMan implements Initializable {
             mouseDrag.enableDrag(root, stage);
             stage.setResizable(false);
             stage.getIcons().add(new Image("maca1.png"));
-            stage.setTitle("Email Sender");
+            stage.setTitle("Certificate Generator");
             stage.setScene(scene);
             stage.show();
 
@@ -77,74 +78,80 @@ public class MailMan implements Initializable {
     public void addFiles() {
         File selectedFile = fileChooser.showOpenDialog(stage);
         if (selectedFile != null) {
+            planilhaParticipantes = selectedFile;
             MailFiles.setText(selectedFile.getAbsolutePath());
         }
     }
 
     public void sendMail() {
-        String subject = MailSubject.getText();
-        String sender = MailSender.getText();
 
-        if (subject.isEmpty() || sender.isEmpty()) {
-            MailMessage.setText("\nPor favor, preencha todos os campos corretamente");
-            return;
-        }
+    MailMessage.setStyle("-fx-text-fill: black;"); 
 
-        int cargaHoraria;
-        try {
-            cargaHoraria = Integer.parseInt(sender);
-        } catch (NumberFormatException e) {
-            MailMessage.setText("\nPor favor, insira um número válido para carga horária");
-            return;
-        }
+    String nomeDoEvento = MailSubject.getText();
+    String cargaHorariaText = MailSender.getText();
 
-        File delta = fileChooser.showOpenDialog(stage);
-        if (delta == null) {
-            MailMessage.setText("\nPor favor, adicione um arquivo");
-            return;
-        }
-
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                ParticipanteService participanteService = new ParticipanteService();
-                List<Participante> listaParticipantes = participanteService.lerPlanilhaDeParticipantes(delta,
-                        subject, cargaHoraria);
-                updateProgress(1, 3);
-
-                CertificateGeneratorService certificateGeneratorService = new CertificateGeneratorService(listaParticipantes);
-                listaParticipantes = certificateGeneratorService.gerarCertificados();
-                updateProgress(2, 3);
-
-                EmailService emailService = new EmailService();
-                String result = emailService.enviarEmails(listaParticipantes);
-                updateProgress(3, 3);
-
-                String message = "\nRELATÓRIO DE ENVIO DE CERTIFICADOS \nNome do Evento: " + subject + ", Carga Horária: " + cargaHoraria + "\n"
-                        + result;
-                MailMessage.appendText(message);
-                return null;
-            }
-        };
-
-        ProgressiveBar.progressProperty().bind(task.progressProperty());
-
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
+    if (nomeDoEvento.isEmpty() || cargaHorariaText.isEmpty()) {
+        MailMessage.setText("\nPor favor, preencha o nome do evento e a carga horária corretamente");
+        return;
     }
+
+    if(planilhaParticipantes == null) {
+        MailMessage.setText("\nÉ obrigatório anexar um arquivo do tipo planilha com os participantes do evento (Nome, CPF e email).");
+        return;
+    }
+
+    int cargaHoraria;
+    try {
+        cargaHoraria = Integer.parseInt(cargaHorariaText);
+    } catch (NumberFormatException e) {
+        MailMessage.setText("\nPor favor, insira um número válido para carga horária");
+        return;
+    }
+
+    Task<Void> task = new Task<Void>() {
+        @Override
+        protected Void call() throws Exception {
+            ParticipanteService participanteService = new ParticipanteService();
+            List<Participante> listaParticipantes = participanteService.lerPlanilhaDeParticipantes(planilhaParticipantes,
+                    nomeDoEvento, cargaHoraria);
+            updateProgress(1, 3);
+
+            CertificateGeneratorService certificateGeneratorService = new CertificateGeneratorService(listaParticipantes);
+            listaParticipantes = certificateGeneratorService.gerarCertificados();
+            updateProgress(2, 3);
+
+            EmailService emailService = new EmailService();
+            String result = emailService.enviarEmails(listaParticipantes);
+            updateProgress(3, 3);
+
+            String message = "\nRELATÓRIO DE ENVIO DE CERTIFICADOS \nNome do Evento: " + nomeDoEvento + ", Carga Horária: " + cargaHoraria + "\n"
+                    + result;
+            MailMessage.appendText(message);
+            return null;
+        }
+    };
+
+    ProgressiveBar.progressProperty().bind(task.progressProperty());
+
+    Thread thread = new Thread(task);
+    thread.setDaemon(true);
+    thread.start();
+}
+
+public void setAFile() {
+    fileChooser.setTitle("Anexar Planilha");
+    fileChooser.getExtensionFilters().addAll(
+        new FileChooser.ExtensionFilter("Planilhas", "*.xls", "*.xlsx")
+    );
+}
 
     public void setUsername() {
-        String text = listInfo.email;
-        if (!text.isEmpty()) {
-            text = text.substring(0, 1).toUpperCase() + text.substring(1);
+        String email = listInfo.email;
+        if (!email.isEmpty()) {
+            int atIndex = email.indexOf('@');
+            String username = atIndex != -1 ? email.substring(0, atIndex) : email;
+            MailUser.setText(username.toUpperCase());
         }
-        MailUser.setText(text);
-    }
-
-    public void setAFile() {
-        fileChooser.setTitle("Anexar Planilha");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Planilhas", "*.xls", "*.xlsx"));
     }
 
     public void leave() {

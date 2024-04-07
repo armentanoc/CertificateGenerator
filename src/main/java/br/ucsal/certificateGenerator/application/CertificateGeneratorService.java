@@ -112,7 +112,7 @@ public class CertificateGeneratorService {
         
         // Texto do Certificado
         
-        String paragraph = "Certificamos que "+ participante.getNome()+" participou do evento "+participante.getNomeEvento()+" com carga horária de "+ participante.getCargaHorariaEvento()+"h de participação.";
+        String paragraph = "Certificamos que "+ participante.getNome().toUpperCase()+" participou do evento "+participante.getNomeEvento()+" com carga horária de "+ participante.getCargaHorariaEvento()+"h de participação.";
         float maxParagraphHeight = height - textHeight - 50; 
         float lineHeight = 30; 
 

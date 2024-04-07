@@ -12,8 +12,8 @@
    <children>
       <AnchorPane layoutX="8.0" layoutY="19.0" prefHeight="140.0" prefWidth="280.0" styleClass="base" stylesheets="@base.css">
          <children>
-            <PasswordField fx:id="LoginPassword" layoutX="92.0" layoutY="74.0" prefHeight="40.0" prefWidth="180.0" promptText="Password" styleClass="textfield" stylesheets="@base.css" />
             <TextField fx:id="LoginEmail" layoutX="92.0" layoutY="24.0" prefHeight="40.0" prefWidth="180.0" promptText="Email" styleClass="textfield" stylesheets="@base.css" />
+            <PasswordField fx:id="LoginPassword" layoutX="92.0" layoutY="74.0" prefHeight="40.0" prefWidth="180.0" promptText="Password" styleClass="textfield" stylesheets="@base.css" />
             <Label layoutX="9.0" layoutY="38.0" styleClass="text" stylesheets="@base.css" text="Email">
                <font>
                   <Font size="18.0" />
