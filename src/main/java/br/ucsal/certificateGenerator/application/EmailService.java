@@ -13,8 +13,8 @@ import br.ucsal.certificateGenerator.domain.Participante;
 public class EmailService {
 
 	String host = "smtp.gmail.com";
-	String username = (listInfo.email != null) ? listInfo.email : "testarmentanoc@gmail.com";
-	String password = (listInfo.password != null) ? listInfo.password : "zlsu viqz bzfv vthr";
+	String username = listInfo.email;
+	String password = listInfo.password;
 	String result = "";
 
 	public String enviarEmails(List<Participante> participantes) throws InterruptedException {

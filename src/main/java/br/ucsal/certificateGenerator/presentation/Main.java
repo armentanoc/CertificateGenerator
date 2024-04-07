@@ -1,3 +1,4 @@
+
 package br.ucsal.certificateGenerator.presentation;
 
 import br.ucsal.certificateGenerator.presentation.controllers.MouseDrag;
@@ -24,11 +25,10 @@ public class Main extends Application {
 
             stage.setResizable(false);
             stage.getIcons().add(new Image("maca1.png"));
-            stage.setTitle("Email Sender");
+            stage.setTitle("Certificate Generator");
             stage.setScene(scene);
             stage.show();
 
         } catch (Exception e) {e.printStackTrace();}
     }
-	
 }
