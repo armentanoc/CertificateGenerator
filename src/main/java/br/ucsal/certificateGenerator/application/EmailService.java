@@ -1,4 +1,4 @@
-package br.ucsal.certificateGenerator.application;
+package br.ucsal.certificateGenerator.presentation;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,14 +6,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import br.ucsal.certificateGenerator.controllers.listInfo;
 import br.ucsal.certificateGenerator.domain.EmailManager;
 import br.ucsal.certificateGenerator.domain.Participante;
 
 public class EmailService {
 
 	String host = "smtp.gmail.com";
-	String username = "testarmentanoc@gmail.com";
-	String password = "zlsu viqz bzfv vthr";
+	String username = listInfo.email;
+	String password = listInfo.password;
 	String result = "";
 
 	public String enviarEmails(List<Participante> participantes) throws InterruptedException {
