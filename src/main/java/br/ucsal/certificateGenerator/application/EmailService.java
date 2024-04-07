@@ -1,4 +1,4 @@
-package br.ucsal.certificateGenerator.presentation;
+package br.ucsal.certificateGenerator.application;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import br.ucsal.certificateGenerator.controllers.listInfo;
+import br.ucsal.certificateGenerator.presentation.controllers.listInfo;
 import br.ucsal.certificateGenerator.domain.EmailManager;
 import br.ucsal.certificateGenerator.domain.Participante;
 

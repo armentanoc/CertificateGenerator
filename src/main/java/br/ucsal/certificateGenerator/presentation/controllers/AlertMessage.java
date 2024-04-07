@@ -1,4 +1,4 @@
-package br.ucsal.certificateGenerator.controllers;
+package br.ucsal.certificateGenerator.presentation.controllers;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package br.ucsal.certificateGenerator.application;
+package br.ucsal.certificateGenerator.presentation;
 
-import br.ucsal.certificateGenerator.controllers.MouseDrag;
+import br.ucsal.certificateGenerator.presentation.controllers.MouseDrag;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

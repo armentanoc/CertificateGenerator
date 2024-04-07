@@ -85,7 +85,7 @@
 				<artifactId>javafx-maven-plugin</artifactId>
 				<version>0.0.8</version>
 				<configuration>
-					<mainClass>br.ucsal.certificateGenerator.application.Main</mainClass>
+					<mainClass>br.ucsal.certificateGenerator.presentation.Main</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

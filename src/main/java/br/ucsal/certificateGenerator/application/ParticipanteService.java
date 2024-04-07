@@ -1,5 +1,4 @@
-package br.ucsal.certificateGenerator.presentation;
-
+package br.ucsal.certificateGenerator.application;
 
 import java.io.File;
 import java.io.FileInputStream;

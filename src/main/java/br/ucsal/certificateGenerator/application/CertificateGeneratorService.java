@@ -1,4 +1,4 @@
-package br.ucsal.certificateGenerator.presentation;
+package br.ucsal.certificateGenerator.application;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
