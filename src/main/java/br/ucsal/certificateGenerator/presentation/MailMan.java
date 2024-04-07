@@ -1,17 +1,17 @@
-package br.ucsal.certificateGenerator.application;
+package br.ucsal.certificateGenerator.presentation;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import br.ucsal.certificateGenerator.controllers.AlertMessage;
-import br.ucsal.certificateGenerator.controllers.MouseDrag;
-import br.ucsal.certificateGenerator.controllers.listInfo;
+import br.ucsal.certificateGenerator.presentation.controllers.AlertMessage;
+import br.ucsal.certificateGenerator.presentation.controllers.MouseDrag;
+import br.ucsal.certificateGenerator.presentation.controllers.listInfo;
 import br.ucsal.certificateGenerator.domain.Participante;
-import br.ucsal.certificateGenerator.presentation.CertificateGeneratorService;
-import br.ucsal.certificateGenerator.presentation.EmailService;
-import br.ucsal.certificateGenerator.presentation.ParticipanteService;
+import br.ucsal.certificateGenerator.application.CertificateGeneratorService;
+import br.ucsal.certificateGenerator.application.EmailService;
+import br.ucsal.certificateGenerator.application.ParticipanteService;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

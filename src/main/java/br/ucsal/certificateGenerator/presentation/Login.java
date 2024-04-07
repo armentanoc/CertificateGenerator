@@ -1,12 +1,11 @@
-package br.ucsal.certificateGenerator.application;
-
+package br.ucsal.certificateGenerator.presentation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import br.ucsal.certificateGenerator.controllers.AlertMessage;
-import br.ucsal.certificateGenerator.controllers.MouseDrag;
-import br.ucsal.certificateGenerator.controllers.listInfo;
+import br.ucsal.certificateGenerator.presentation.controllers.AlertMessage;
+import br.ucsal.certificateGenerator.presentation.controllers.MouseDrag;
+import br.ucsal.certificateGenerator.presentation.controllers.listInfo;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
