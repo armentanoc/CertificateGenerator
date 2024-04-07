@@ -63,7 +63,7 @@ public class EmailSender {
             return returnMessage;
 
         } catch (MessagingException e) {
-        	returnMessage = "[EMAIL SENDER] Erro ao enviar e-mail para: " + to;
+        	returnMessage = "[EMAIL SENDER] Erro ao enviar e-mail para: " + to + "Details: " + e.getMessage();
         	System.err.print(returnMessage);
         	e.printStackTrace();
         	return returnMessage;
