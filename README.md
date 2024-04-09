@@ -21,7 +21,10 @@ Para utilizar a aplicação, siga os passos abaixo:
 
 1. Clone este repositório em sua máquina local.
 2. Abra o projeto em sua IDE de preferência.
-3. No terminal, execute `mvn clean javafx:run`.
+3. No terminal, execute o seguinte comando: 
+```
+mvn clean javafx:run
+```
 4. A interface gráfica da aplicação será exibida.
 5. Realize o login com um email gmail configurado para utilização de aplicação e a respectiva senha.
 6. Informe nome do evento, carga horária e selecione a planilha contendo os participantes.
