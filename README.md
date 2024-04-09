@@ -11,6 +11,23 @@ O projeto está dividido em quatro pacotes principais:
 - `br.ucsal.certificateGenerator.domain`: Contém as classes de domínio que representam os participantes e o conteúdo dos e-mails.
 - `br.ucsal.certificateGenerator.infra`: Contém os certificados digitais gerados e armazenados localmente.
 
+## Fluxo da Aplicação
+
+### `ParticipanteService`
+<div align="center" display="flex">
+<img src="https://github.com/armentanoc/CertificateGenerator/assets/88147887/71a0b6b7-45f1-4718-803a-b70c54d4869d">
+</div>
+
+### `CertificateGeneratorService`
+<div align="center" display="flex">
+<img src="https://github.com/armentanoc/CertificateGenerator/assets/88147887/3d221e82-5d6c-49a2-9e29-99b41b9adb16">
+</div>
+
+### `EmailService`
+<div align="center" display="flex">
+<img src="https://github.com/armentanoc/CertificateGenerator/assets/88147887/84cc08c0-ca5b-44a0-947c-6c3ee3d4edcf">
+</div>  
+
 ## ⚙️ Ambiente Local
 
 Certifique-se de ter o Java Development Kit (JDK) 17+ e o Maven instalados e configurados em seu sistema.
